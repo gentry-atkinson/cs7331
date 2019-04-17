@@ -10,56 +10,49 @@
 using namespace std;
 
 struct point{
-	float x;
-	float y;
 	int cluster;
+	float* values;
 };
 
-struct centroid{
-	float x;
-	float y;
-};
-
-float euDis(point, centroid);
+float euDis(point, point, int);
 
 int main(int argc, char** argv){
-	if (argc != 3) {
-		cerr << "Command format is \"kmeans k input_file\"" << endl;
+	if (argc != 4) {
+		cerr << "Command format is \"kmeans k input_file dimensions\"" << endl;
 		return 1;
 	}
 
 	int listSize = 10;
 	point* pointList = new point[listSize];
 	int numberOfPoints = 0;
-	int k = atoi(argv[1]);
+	const int k = atoi(argv[1]);
 	string inFileName = argv[2];
+	const int dimensions = atoi(argv[3]);
 	ifstream inFile(inFileName);
-	centroid * centroidList = new centroid[k];
-	//float maxX = 0, maxY = 0;
+	point centroidList[k];
 	bool done;
-	//int numLoops = 0;
-	string palette[] = {"red", "blue", "green", "yellow"};
 
 	//Read in the input file
 	while (!inFile.eof()){
 		//max list size has been reached. Expand
 		if (numberOfPoints >= listSize){
 			listSize *= 2;
-			point * newList = new point[listSize];
+			point* newList = new point[listSize];
 			for (int i = 0; i < numberOfPoints; i++){
-				newList[i].x = pointList[i].x;
-				newList[i].y = pointList[i].y;
+                newList[i].values = new float[dimensions];
+				for(int j = 0; j < dimensions; ++j){
+                    newList[i].values[j] = pointList[i].values[j];
+                }
 				newList[i].cluster = pointList[i].cluster;
 			}
 			pointList = newList;
 		}
-		inFile >> pointList[numberOfPoints].x;
-		inFile >> pointList[numberOfPoints].y;
+
+		pointList[numberOfPoints].values = new float[dimensions];
+		for(int i = 0; i < dimensions; ++i){
+            inFile >> pointList[numberOfPoints].values[i];
+		}
 		pointList[numberOfPoints].cluster = -1;
-		//if (pointList[numberOfPoints].x > maxX)
-		//	maxX = pointList[numberOfPoints].x;
-		//if (pointList[numberOfPoints].y > maxY)
-		//	maxY = pointList[numberOfPoints].y;
 		numberOfPoints++;
 	}
 
@@ -67,8 +60,10 @@ int main(int argc, char** argv){
 	srand(time(NULL));
 	for (int c = 0; c < k; c++){
 		int randomPoint = rand() % numberOfPoints;
-		centroidList[c].x = pointList[randomPoint].x;
-		centroidList[c].y = pointList[randomPoint].y;
+		centroidList[c].values = new float[dimensions];
+		for (int i = 0; i < dimensions; ++i){
+            centroidList[c].values[i] = pointList[randomPoint].values[i];
+		}
 	}
 
 	//Loop until the centroids do not shift
@@ -79,7 +74,7 @@ int main(int argc, char** argv){
 			float thisDist = 0;
 			float lastDist = FLT_MAX;
 			for (int c = 0; c < k; c++){
-				thisDist = euDis(pointList[p], centroidList[c]);
+				thisDist = euDis(pointList[p], centroidList[c], dimensions);
 				if (thisDist < lastDist){
 					pointList[p].cluster = c;
 					lastDist = thisDist;
@@ -89,50 +84,55 @@ int main(int argc, char** argv){
 		}
 
 		//adjust centroids
-		float xSum[k];
-		float ySum[k];
+		//float xSum[k];
+		//float ySum[k];
+		float sums[k][dimensions];
 		float totalPoints[k];
-		for (int c = 0; c < k; c++){
-			xSum[c] = 0;
-			ySum[c] = 0;
+		for (int c = 0; c < k; c++){ //initialize all sums to 0
+			for(int i = 0; i < dimensions; ++i){
+                sums[c][i] = 0;
+			}
 			totalPoints[c] = 0;
 		}
-		for (int p = 0; p < numberOfPoints; p++){
-			xSum[pointList[p].cluster] += pointList[p].x;
-			ySum[pointList[p].cluster] += pointList[p].y;
+		for (int p = 0; p < numberOfPoints; p++){  //sum across all dimensions for all points
+			for (int i = 0; i < dimensions; ++i){
+                sums[pointList[p].cluster][i] += pointList[p].values[i];
+			}
 			totalPoints[pointList[p].cluster] += 1;
 		}
-		//cout << endl << "New Centroids: " << endl;
+
 		for (int c = 0; c < k; c++){
-			float newX = totalPoints[c] > 0?xSum[c] / totalPoints[c]:0;
-			float newY = totalPoints[c] > 0?ySum[c] / totalPoints[c]:0;
-			if (newX != centroidList[c].x && newX != 0){
-				centroidList[c].x = newX;
-				done = false;
+            float newVals[dimensions];
+			for (int i = 0; i < dimensions; ++i){
+                newVals[i] = (totalPoints[c] > 0)?(sums[c][i] / totalPoints[c]):0;
 			}
-			if (newY != centroidList[c].y && newY != 0){
-				centroidList[c].y = newY;
-				done = false;
+
+			for (int i = 0; i < dimensions; ++i){
+                if (newVals[i] != centroidList[c].values[i] && newVals[i] != 0){
+                    centroidList[c].values[i] = newVals[i];
+                    done = false;
+                }
 			}
-			//cout << "\t#" << c << " " << centroidList[c].x << " " << centroidList[c].y << endl;
 		}
-		//numLoops += 1;
-		//cout << "Loop: " << numLoops << endl;
 	}while(!done);
 
 	//output the result
 	for (int p = 0; p < numberOfPoints; p++){
-		cout << pointList[p].x << " " << pointList[p].y << " " << pointList[p].cluster + 1 << endl;
-		//cout << pointList[p].x << " " << pointList[p].y << " " << palette[pointList[p].cluster] << endl;
+		for (int i = 0; i < dimensions; ++i){
+            cout << pointList[p].values[i] << " ";
+		}
+		cout << pointList[p].cluster + 1 << endl;
 	}
 
 	return 0;
 }
 
 
-float euDis(point p, centroid c){
-	float dist = pow((p.x - c.x), 2) + pow((p.y - c.y), 2);
+float euDis(point p, point c, int d){
+	float dist = 0;
+	for (int i = 0; i < d; ++i){
+        dist += ((p.values[i] - c.values[i]) * (p.values[i] - c.values[i]));
+	}
 	dist = sqrt(dist);
-	//cout << p.x << "," << p.y << " to " << c.x << "," << c.y << " is " << dist << endl;
 	return dist;
 }
