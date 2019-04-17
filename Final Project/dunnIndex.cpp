@@ -39,8 +39,7 @@ int main(int argc, char** argv){
         inFile >> points[temp].cluster;
         temp++;
 	}
-
-	auto start = chrono::high_resolution_clock::now();
+	auto start = high_resolution_clock::now();
 
 	//calculate centers
     float sums[numClusters][dimensions];
@@ -56,10 +55,10 @@ int main(int argc, char** argv){
         totalPoints[points[i].cluster-1] += 1;
 	}
 	for (int i = 0; i < numClusters; ++i){ //divide sum by points to get centers
-        //centers[i].x = (xSum[i] / totalPoints[i]);
-        //centers[i].y = (ySum[i] / totalPoints[i]);
-        for (int j = 0; j < dimensions; ++j)
+        centers[i].values = new float[dimensions];
+        for (int j = 0; j < dimensions; ++j){
             centers[i].values[j] = (sums[i][j] / totalPoints[i]);
+        }
         centers[i].cluster = i+1;
 	}
 
@@ -87,15 +86,16 @@ int main(int argc, char** argv){
         }
 	}
 
-	auto stop = chrono::high_resolution_clock::now();
-	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+	auto stop = high_resolution_clock::now();
+	auto duration = duration_cast<microseconds>(stop - start);
 
 	//cout << "Minimum distance between clusters: " << minInterClusterDist << endl;
 	//cout << "Largest size of cluster: " << maxIntraClusterDist << endl;
 
 
     cout << "Dunn Index: " << minInterClusterDist/maxIntraClusterDist << endl;
-    //cout << "Time to run: " << duration << " microseconds." << endl;
+    cout << "Time to run: " << (duration.count())/1000.0 << " milliseconds." << endl;
 
 	return 0;
 }
