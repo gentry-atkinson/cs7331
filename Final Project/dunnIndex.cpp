@@ -3,53 +3,63 @@
 #include <stdio.h>
 #include <cmath>
 #include <limits>
+#include <omp.h>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 struct point{
-	float x;
-	float y;
 	int cluster;
+	float* values;
 };
 
-float euDis(point, point);
+float euDis(point, point, int);
 
 int main(int argc, char** argv){
-	if (argc != 4) {
-		cerr << "Command format is \"dunnIndex num_points num_clusters filename\"" << endl;
+	if (argc != 5) {
+		cerr << "Command format is \"dunnIndex num_points num_clusters dimensions filename\"" << endl;
 		return 1;
 	}
 
     numeric_limits<float> bound;
-	int numPoints = atoi(argv[1]);
-	int numClusters = atoi(argv[2]);
-	ifstream inFile(argv[3]);
+	const int numPoints = atoi(argv[1]);
+	const int numClusters = atoi(argv[2]);
+	const int dimensions = atoi(argv[3]);
+	ifstream inFile(argv[4]);
 
 	point points[numPoints];
 	point centers[numClusters];
 	int temp = 0;
 	while (!inFile.eof()){
-        inFile >> points[temp].x >> points[temp].y >> points[temp].cluster;
+        points[temp].values = new float[dimensions];
+        for (int i = 0; i < dimensions; ++i){
+            inFile >> points[temp].values[i];
+        }
+        inFile >> points[temp].cluster;
         temp++;
 	}
 
+	auto start = chrono::high_resolution_clock::now();
+
 	//calculate centers
-	float xSum[numClusters];
-    float ySum[numClusters];
+    float sums[numClusters][dimensions];
     float totalPoints[numClusters];
-	for(int i = 0; i < numClusters; i++){
-        xSum[i] = 0;
-        ySum[i] = 0;
+	for(int i = 0; i < numClusters; ++i){   //initialize everything to 0
+        for(int j = 0; j < dimensions; ++j)
+            sums[i][j] = 0;
         totalPoints[i] = 0;
 	}
-	for (int i = 0; i < numPoints; i++){
-        xSum[points[i].cluster-1] += points[i].x;
-        ySum[points[i].cluster-1] += points[i].y;
+	for (int i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
+        for (int j = 0; j < dimensions; ++j)
+            sums[points[i].cluster-1][j] += points[i].values[j];
         totalPoints[points[i].cluster-1] += 1;
 	}
-	for (int i = 0; i < numClusters; i++){
-        centers[i].x = (xSum[i] / totalPoints[i]);
-        centers[i].y = (ySum[i] / totalPoints[i]);
+	for (int i = 0; i < numClusters; ++i){ //divide sum by points to get centers
+        //centers[i].x = (xSum[i] / totalPoints[i]);
+        //centers[i].y = (ySum[i] / totalPoints[i]);
+        for (int j = 0; j < dimensions; ++j)
+            centers[i].values[j] = (sums[i][j] / totalPoints[i]);
         centers[i].cluster = i+1;
 	}
 
@@ -60,7 +70,7 @@ int main(int argc, char** argv){
 	for (int i = 0; i < numClusters; i++){
         for (int j = i; j < numClusters; j++){
             if (i == j) continue;
-            float thisDist = euDis(centers[i], centers[j]);
+            float thisDist = euDis(centers[i], centers[j], dimensions);
             if (thisDist < minInterClusterDist)
                 minInterClusterDist = thisDist;
         }
@@ -70,23 +80,31 @@ int main(int argc, char** argv){
 	for (int i = 0; i < numPoints; i++){
         for (int j = i; j < numPoints; j++){
             if (points[i].cluster == points[j].cluster){
-                float thisDis = euDis(points[i], points[j]);
+                float thisDis = euDis(points[i], points[j], dimensions);
                 if (thisDis > maxIntraClusterDist)
                     maxIntraClusterDist = thisDis;
             }
         }
 	}
-	cout << "Minimum distance between clusters: " << minInterClusterDist << endl;
-	cout << "Largest size of cluster: " << maxIntraClusterDist << endl;
+
+	auto stop = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+	//cout << "Minimum distance between clusters: " << minInterClusterDist << endl;
+	//cout << "Largest size of cluster: " << maxIntraClusterDist << endl;
 
 
-    cout << minInterClusterDist/maxIntraClusterDist << endl;
+    cout << "Dunn Index: " << minInterClusterDist/maxIntraClusterDist << endl;
+    //cout << "Time to run: " << duration << " microseconds." << endl;
 
 	return 0;
 }
 
-float euDis(point p, point c){
-	float dist = pow((p.x - c.x), 2) + pow((p.y - c.y), 2);
+float euDis(point p, point c, int d){
+	float dist = 0;
+	for (int i = 0; i < d; ++i){
+        dist += ((p.values[i] - c.values[i]) * (p.values[i] - c.values[i]));
+	}
 	dist = sqrt(dist);
 	return dist;
 }
