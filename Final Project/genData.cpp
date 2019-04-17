@@ -36,13 +36,19 @@ int main(int argc, char** argv){
 
     outFile << fixed << setprecision(2);
 
-    for (int i = 0; i < num_points; ++i){
+    for (int i = 0; i < num_points-1; ++i){
         clusterPicker = (rand() % num_clusters);
         for (int j = 0; j < dimensions; ++j){
             float displacement = distribution(generator);
             outFile << centers[clusterPicker][j] +  displacement << " ";
         }
         outFile << endl;
+    }
+
+    clusterPicker = (rand() % num_clusters);
+    for (int j = 0; j < dimensions; ++j){
+        float displacement = distribution(generator);
+        outFile << centers[clusterPicker][j] +  displacement << " ";
     }
 
     return 0;
