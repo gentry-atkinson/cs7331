@@ -56,7 +56,7 @@ int main(int argc, char** argv){
 		numberOfPoints++;
 	}
 
-	//Initialize centroids
+	//Initialize centroids to random points
 	srand(time(NULL));
 	for (int c = 0; c < k; c++){
 		int randomPoint = rand() % numberOfPoints;
@@ -66,26 +66,25 @@ int main(int argc, char** argv){
 		}
 	}
 
+	//assign points to centroids
+    for (int p = 0; p < numberOfPoints; p++){
+        float thisDist;
+        float lastDist = FLT_MAX;
+        for (int c = 0; c < k; c++){
+            thisDist = euDis(pointList[p], centroidList[c], dimensions);
+            if (thisDist < lastDist){
+                pointList[p].cluster = c;
+                lastDist = thisDist;
+            }
+        }
+
+    }
+
 	//Loop until the centroids do not shift
 	do {
 		done = true;
-		//assign points to centroids
-		for (int p = 0; p < numberOfPoints; p++){
-			float thisDist = 0;
-			float lastDist = FLT_MAX;
-			for (int c = 0; c < k; c++){
-				thisDist = euDis(pointList[p], centroidList[c], dimensions);
-				if (thisDist < lastDist){
-					pointList[p].cluster = c;
-					lastDist = thisDist;
-				}
-			}
-
-		}
 
 		//adjust centroids
-		//float xSum[k];
-		//float ySum[k];
 		float sums[k][dimensions];
 		float totalPoints[k];
 		for (int c = 0; c < k; c++){ //initialize all sums to 0
@@ -101,7 +100,7 @@ int main(int argc, char** argv){
 			totalPoints[pointList[p].cluster] += 1;
 		}
 
-		for (int c = 0; c < k; c++){
+		for (int c = 0; c < k; c++){           //adjust centers
             float newVals[dimensions];
 			for (int i = 0; i < dimensions; ++i){
                 newVals[i] = (totalPoints[c] > 0)?(sums[c][i] / totalPoints[c]):0;
@@ -114,6 +113,20 @@ int main(int argc, char** argv){
                 }
 			}
 		}
+
+		//assign points to centroids
+		for (int p = 0; p < numberOfPoints; p++){
+			float thisDist;
+			float lastDist = FLT_MAX;
+			for (int c = 0; c < k; c++){
+				thisDist = euDis(pointList[p], centroidList[c], dimensions);
+				if (thisDist < lastDist){
+					pointList[p].cluster = c;
+					lastDist = thisDist;
+				}
+			}
+
+		}
 	}while(!done);
 
 	//output the result
@@ -123,7 +136,7 @@ int main(int argc, char** argv){
 		}
 		cout << pointList[p].cluster + 1 << endl;
 	}
-
+    delete[] pointList;
 	return 0;
 }
 
