@@ -17,8 +17,8 @@ struct point{
 float euDis(point, point, int);
 
 int main(int argc, char** argv){
-	if (argc != 5) {
-		cerr << "Command format is \"dunnIndex num_points num_clusters dimensions filename\"" << endl;
+	if (argc != 6) {
+		cerr << "Command format is \"dunnIndex num_points num_clusters dimensions num_threads filename\"" << endl;
 		return 1;
 	}
 
@@ -26,7 +26,8 @@ int main(int argc, char** argv){
 	const int numPoints = atoi(argv[1]);
 	const int numClusters = atoi(argv[2]);
 	const int dimensions = atoi(argv[3]);
-	ifstream inFile(argv[4]);
+	const int num_threads = atoi(argv[4]);
+	ifstream inFile(argv[5]);
 
 	point points[numPoints];
 	point centers[numClusters];
@@ -44,16 +45,21 @@ int main(int argc, char** argv){
 	//calculate centers
     float sums[numClusters][dimensions];
     float totalPoints[numClusters];
+
+    #pragma omp parallel for
 	for(int i = 0; i < numClusters; ++i){   //initialize everything to 0
         for(int j = 0; j < dimensions; ++j)
             sums[i][j] = 0;
         totalPoints[i] = 0;
 	}
+	#pragma omp parallel for
 	for (int i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
         for (int j = 0; j < dimensions; ++j)
             sums[points[i].cluster-1][j] += points[i].values[j];
         totalPoints[points[i].cluster-1] += 1;
 	}
+
+	#pragma omp parallel for
 	for (int i = 0; i < numClusters; ++i){ //divide sum by points to get centers
         centers[i].values = new float[dimensions];
         for (int j = 0; j < dimensions; ++j){
@@ -66,6 +72,7 @@ int main(int argc, char** argv){
 	float maxIntraClusterDist = 0;
 
 	//calculate min inter-cluster distance
+	#pragma omp parallel for num_threads(4)
 	for (int i = 0; i < numClusters; i++){
         for (int j = i; j < numClusters; j++){
             if (i == j) continue;
@@ -76,6 +83,7 @@ int main(int argc, char** argv){
 	}
 
 	//calculate max intra-cluster distance
+	#pragma omp parallel for
 	for (int i = 0; i < numPoints; i++){
         for (int j = i; j < numPoints; j++){
             if (points[i].cluster == points[j].cluster){
@@ -89,10 +97,6 @@ int main(int argc, char** argv){
 
 	auto stop = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(stop - start);
-
-	//cout << "Minimum distance between clusters: " << minInterClusterDist << endl;
-	//cout << "Largest size of cluster: " << maxIntraClusterDist << endl;
-
 
     cout << "Dunn Index: " << minInterClusterDist/maxIntraClusterDist << endl;
     cout << "Time to run: " << (duration.count())/1000.0 << " milliseconds." << endl;

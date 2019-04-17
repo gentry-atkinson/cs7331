@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <limits>
+#include <omp.h>
 #include <chrono>
 
 using namespace std;
