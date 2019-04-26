@@ -78,7 +78,6 @@ int main(int argc, char** argv){
 	}
 
 	//calculate max intra-cluster distance
-	#pragma omp parallel for
 	for (int i = 0; i < numPoints; i++){
         for (int j = i; j < numPoints; j++){
             if (points[i].cluster == points[j].cluster){
