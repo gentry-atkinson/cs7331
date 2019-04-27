@@ -18,7 +18,7 @@ float euDis(point, point, int);
 float calcS(const point*, point, int, int);
 
 int main(int argc, char** argv){
-		if (argc != 5) {
+		if (argc != 6) {
 		cerr << "Command format is \"DBIndex num_points num_clusters dimensions num_threads filename\"" << endl;
 		return 1;
 	}
