@@ -42,27 +42,28 @@ int main(int argc, char** argv){
         inFile >> points[temp].cluster;
         temp++;
 	}
+	int i,j;
 	auto start = high_resolution_clock::now();
 
 	//calculate centers
     float sums[numClusters][dimensions];
     float totalPoints[numClusters];
     #pragma parallel for
-	for(int i = 0; i < numClusters; ++i){   //initialize everything to 0
-        for(int j = 0; j < dimensions; ++j)
+	for(i = 0; i < numClusters; ++i){   //initialize everything to 0
+        for(j = 0; j < dimensions; ++j)
             sums[i][j] = 0;
         totalPoints[i] = 0;
 	}
 	#pragma parallel for private(j) collapse(1)
-	for (int i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
-        for (int j = 0; j < dimensions; ++j)
+	for (i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
+        for (j = 0; j < dimensions; ++j)
             sums[points[i].cluster-1][j] += points[i].values[j];
         totalPoints[points[i].cluster-1] += 1;
 	}
     #pragma parallel for private(j) collapse(1)
-	for (int i = 0; i < numClusters; ++i){ //divide sum by points to get centers
+	for (i = 0; i < numClusters; ++i){ //divide sum by points to get centers
         centers[i].values = new float[dimensions];
-        for (int j = 0; j < dimensions; ++j){
+        for (j = 0; j < dimensions; ++j){
             centers[i].values[j] = (sums[i][j] / totalPoints[i]);
         }
         centers[i].cluster = i+1;
@@ -73,8 +74,8 @@ int main(int argc, char** argv){
 
 	//calculate min inter-cluster distance
 	#pragma parallel for private(j) collapse(1)
-	for (int i = 0; i < numClusters; i++){
-        for (int j = i; j < numClusters; j++){
+	for (i = 0; i < numClusters; i++){
+        for (j = i; j < numClusters; j++){
             if (i == j) continue;
             float thisDist = euDis(centers[i], centers[j], dimensions);
             if (thisDist < minInterClusterDist)
@@ -84,8 +85,8 @@ int main(int argc, char** argv){
 
 	//calculate max intra-cluster distance
 	#pragma parallel for private(j) collapse(1)
-	for (int i = 0; i < numPoints; i++){
-        for (int j = i; j < numPoints; j++){
+	for (i = 0; i < numPoints; i++){
+        for (j = i; j < numPoints; j++){
             if (points[i].cluster == points[j].cluster){
                 float thisDis = euDis(points[i], points[j], dimensions);
                 if (thisDis > maxIntraClusterDist)
