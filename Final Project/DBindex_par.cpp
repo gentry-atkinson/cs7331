@@ -19,7 +19,7 @@ float calcS(const point*, point, int, int);
 
 int main(int argc, char** argv){
 		if (argc != 5) {
-		cerr << "Command format is \"DBIndex num_points num_clusters dimensions filename\"" << endl;
+		cerr << "Command format is \"DBIndex num_points num_clusters dimensions num_threads filename\"" << endl;
 		return 1;
 	}
 
@@ -27,7 +27,10 @@ int main(int argc, char** argv){
 	const int numPoints = atoi(argv[1]);
 	const int numClusters = atoi(argv[2]);
 	const int dimensions = atoi(argv[3]);
-	ifstream inFile(argv[4]);
+	const int num_threads = atoi(argv[4]);
+	ifstream inFile(argv[5]);
+
+	omp_set_num_threads(num_threads);
 
 	point points[numPoints];
 	point centers[numClusters];
