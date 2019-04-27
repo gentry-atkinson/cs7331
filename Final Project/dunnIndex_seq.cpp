@@ -16,8 +16,8 @@ struct point{
 float euDis(point, point, int);
 
 int main(int argc, char** argv){
-	if (argc != 6) {
-		cerr << "Command format is \"dunnIndex num_points num_clusters dimensions num_threads filename\"" << endl;
+	if (argc != 5) {
+		cerr << "Command format is \"dunnIndex num_points num_clusters dimensions filename\"" << endl;
 		return 1;
 	}
 
@@ -25,8 +25,7 @@ int main(int argc, char** argv){
 	const int numPoints = atoi(argv[1]);
 	const int numClusters = atoi(argv[2]);
 	const int dimensions = atoi(argv[3]);
-	const int num_threads = atoi(argv[4]);
-	ifstream inFile(argv[5]);
+	ifstream inFile(argv[4]);
 
 	point points[numPoints];
 	point centers[numClusters];
