@@ -53,13 +53,13 @@ int main(int argc, char** argv){
             sums[i][j] = 0;
         totalPoints[i] = 0;
 	}
-	#pragma parallel for private(j)
+	#pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
         for (int j = 0; j < dimensions; ++j)
             sums[points[i].cluster-1][j] += points[i].values[j];
         totalPoints[points[i].cluster-1] += 1;
 	}
-    #pragma parallel for private(j)
+    #pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numClusters; ++i){ //divide sum by points to get centers
         centers[i].values = new float[dimensions];
         for (int j = 0; j < dimensions; ++j){
@@ -72,7 +72,7 @@ int main(int argc, char** argv){
 	float maxIntraClusterDist = 0;
 
 	//calculate min inter-cluster distance
-	#pragma parallel for private(j)
+	#pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numClusters; i++){
         for (int j = i; j < numClusters; j++){
             if (i == j) continue;
@@ -83,7 +83,7 @@ int main(int argc, char** argv){
 	}
 
 	//calculate max intra-cluster distance
-	#pragma parallel for private(j)
+	#pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numPoints; i++){
         for (int j = i; j < numPoints; j++){
             if (points[i].cluster == points[j].cluster){

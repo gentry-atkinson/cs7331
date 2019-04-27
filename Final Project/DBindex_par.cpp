@@ -48,19 +48,19 @@ int main(int argc, char** argv){
 	//calculate centers
     float sums[numClusters][dimensions];
     float totalPoints[numClusters];
-    #pragma parallel for private(j)
+    #pragma parallel for private(j) collapse(1)
 	for(int i = 0; i < numClusters; ++i){   //initialize everything to 0
         for(int j = 0; j < dimensions; ++j)
             sums[i][j] = 0;
         totalPoints[i] = 0;
 	}
-	#pragma parallel for private(j)
+	#pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
         for (int j = 0; j < dimensions; ++j)
             sums[points[i].cluster-1][j] += points[i].values[j];
         totalPoints[points[i].cluster-1] += 1;
 	}
-	#pragma parallel for private(j)
+	#pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numClusters; ++i){ //divide sum by points to get centers
         centers[i].values = new float[dimensions];
         for (int j = 0; j < dimensions; ++j){
@@ -71,7 +71,7 @@ int main(int argc, char** argv){
 
 	float D[numClusters];
 	float totalD = 0;
-    #pragma parallel for private(j)
+    #pragma parallel for private(j) collapse(1)
 	for (int i = 0; i < numClusters-1; i++){
         D[i] = 0;
         for (int j = i+1; j < numClusters; j++){
