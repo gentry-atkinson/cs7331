@@ -29,6 +29,8 @@ int main(int argc, char** argv){
 	const int num_threads = atoi(argv[4]);
 	ifstream inFile(argv[5]);
 
+	omp_set_num_threads(num_threads);
+
 	point points[numPoints];
 	point centers[numClusters];
 	int temp = 0;
