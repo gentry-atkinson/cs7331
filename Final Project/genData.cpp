@@ -20,7 +20,7 @@ int main(int argc, char** argv){
     default_random_engine generator;
     normal_distribution<float> distribution(0, 1);
 
-    float scale = num_clusters * 15;
+    float scale = num_clusters * 10;
     float centers[num_clusters][dimensions];
 
     srand(time(NULL));
