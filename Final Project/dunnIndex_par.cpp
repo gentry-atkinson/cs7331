@@ -83,6 +83,7 @@ int main(int argc, char** argv){
         }
 	}
 	//calculate max intra-cluster distance
+	#pragma omp parallel for
 	for (i = 0; i < numPoints-1; ++i){
         float thisDist = euDis(points[i], centers[points[i].cluster-1], dimensions);
         if (thisDist > maxIntraClusterDist){

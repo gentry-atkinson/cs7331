@@ -1,229 +1,229 @@
 ############ Dunn on 2d Data ##################
 Sequential Dunn Index on 2d with 2 clusters: 
 Dunn Index: 2.28696
-Time to run: 2.785 milliseconds.
+Time to run: 65.414 milliseconds.
 
 Sequential Dunn Index on 2d with 3 clusters: 
 Dunn Index: 2.98753
-Time to run: 3.075 milliseconds.
+Time to run: 65.364 milliseconds.
 
 Parallel Dunn Index on 2d with 2 clusters and 2 threads: 
-Dunn Index: 2.25443
-Time to run: 79.41 milliseconds.
+Dunn Index: 2.20034
+Time to run: 38.387 milliseconds.
 
 Parallel Dunn Index on 2d with 3 clusters and 2 threads: 
-Dunn Index: 2.82471
-Time to run: 77.629 milliseconds.
+Dunn Index: 2.71702
+Time to run: 38.733 milliseconds.
 
 Parrallel Dunn Index on 2d with 2 clusters and 4 threads: 
-Dunn Index: 2.22404
-Time to run: 99.126 milliseconds.
+Dunn Index: 2.29687
+Time to run: 27.42 milliseconds.
 
 Parrallel Dunn Index on 2d with 3 clusters and 4 threads: 
-Dunn Index: 2.46785
-Time to run: 97.941 milliseconds.
+Dunn Index: 3.03463
+Time to run: 23.663 milliseconds.
 
 Parallel Dunn Index on 2d with 2 clusters and 8 threads: 
-Dunn Index: 2.19004
-Time to run: 132.763 milliseconds.
+Dunn Index: 2.27039
+Time to run: 25.906 milliseconds.
 
 Parrallel Dunn Index on 2d with 3 clusters and 8 threads: 
-Dunn Index: 1.91785
-Time to run: 129.327 milliseconds.
+Dunn Index: 0.891558
+Time to run: 16.466 milliseconds.
 ############ Dunn on 10d Data ##################
 
 Sequential Dunn Index on 10d with 2 clusters: 
 Dunn Index: 3.66764
-Time to run: 8.216 milliseconds.
+Time to run: 70.308 milliseconds.
 
 Sequential Dunn Index on 10d with 3 clusters: 
 Dunn Index: 0.238661
-Time to run: 8.067 milliseconds.
+Time to run: 72.342 milliseconds.
 
 Parallel Dunn Index on 10d with 2 clusters and 2 threads: 
-Dunn Index: 3.48741
-Time to run: 89.143 milliseconds.
+Dunn Index: 3.24943
+Time to run: 47.925 milliseconds.
 
 Parallel Dunn Index on 10d with 3 clusters and 2 threads: 
-Dunn Index: 0.19195
-Time to run: 80.435 milliseconds.
+Dunn Index: 0.16922
+Time to run: 44.296 milliseconds.
 
 Parrallel Dunn Index on 10d with 2 clusters and 4 threads: 
-Dunn Index: 3.05101
-Time to run: 111.058 milliseconds.
+Dunn Index: 2.15191
+Time to run: 32.812 milliseconds.
 
 Parrallel Dunn Index on 10d with 3 clusters and 4 threads: 
-Dunn Index: 0.0985
-Time to run: 109.872 milliseconds.
+Dunn Index: 0.23516
+Time to run: 33.06 milliseconds.
 
 Parallel Dunn Index on 10d with 2 clusters and 8 threads: 
-Dunn Index: 1.81337
-Time to run: 153.392 milliseconds.
+Dunn Index: 1.58525
+Time to run: 24.084 milliseconds.
 
 Parrallel Dunn Index on 10d with 3 clusters and 8 threads: 
-Dunn Index: 0.190747
-Time to run: 151.484 milliseconds.
+Dunn Index: 0.238852
+Time to run: 25.608 milliseconds.
 ############### DB Index on 2d Data #################
 
 Sequential DB Index on 2d with 2 clusters: 
 Davies-Boudlin Index: 0.164323
-Time to run: 3.41 milliseconds.
+Time to run: 63.998 milliseconds.
 
 Sequential DB Index on 2d with 3 clusters: 
 Davies-Boudlin Index: 0.0838083
-Time to run: 7.173 milliseconds.
+Time to run: 131.18 milliseconds.
 
 Parallel DB Index on 2d with 2 clusters and 2 threads: 
-Davies-Boudlin Index: 0.166951
-Time to run: 63.074 milliseconds.
+Davies-Boudlin Index: 0.16347
+Time to run: 69.039 milliseconds.
 
 Parrallel DB Index on 2d with 3 clusters and 2 threads: 
-Davies-Boudlin Index: 0.0837382
-Time to run: 90.17 milliseconds.
+Davies-Boudlin Index: 0.0840691
+Time to run: 96.785 milliseconds.
 
 Parallel DB Index on 2d with 2 clusters and 4 threads: 
-Davies-Boudlin Index: 0.16735
-Time to run: 64.034 milliseconds.
+Davies-Boudlin Index: 0.163993
+Time to run: 69.429 milliseconds.
 
 Parrallel DB Index on 2d with 3 clusters and 4 threads: 
-Davies-Boudlin Index: 0.0937332
-Time to run: 94.175 milliseconds.
+Davies-Boudlin Index: 0.0953338
+Time to run: 96.931 milliseconds.
 
 Parallel DB Index on 2d with 2 clusters and 8 threads: 
-Davies-Boudlin Index: 0.174985
-Time to run: 68.806 milliseconds.
+Davies-Boudlin Index: 0.196473
+Time to run: 72.891 milliseconds.
 
 Parrallel DB Index on 2d with 3 clusters and 8 threads: 
-Davies-Boudlin Index: 0.10739
-Time to run: 92.329 milliseconds.
+Davies-Boudlin Index: 0.192379
+Time to run: 99.218 milliseconds.
 ############### DB Index on 10d Datas ##############
 
 Sequential DB Index on 10d with 2 clusters: 
 Davies-Boudlin Index: 0.124087
-Time to run: 8.689 milliseconds.
+Time to run: 74.559 milliseconds.
 
 Sequential DB Index on 10d with 3 clusters: 
 Davies-Boudlin Index: 1.30839
-Time to run: 14.321 milliseconds.
+Time to run: 142.605 milliseconds.
 
 Parallel DB Index on 10d with 2 clusters and 2 threads: 
-Davies-Boudlin Index: 0.166493
-Time to run: 72.243 milliseconds.
+Davies-Boudlin Index: 0.141383
+Time to run: 78.876 milliseconds.
 
 Parrallel DB Index on 10d with 3 clusters and 2 threads: 
-Davies-Boudlin Index: 1.71656
-Time to run: 107.617 milliseconds.
+Davies-Boudlin Index: 0.900827
+Time to run: 113.868 milliseconds.
 
 Parallel DB Index on 10d with 2 clusters and 4 threads: 
-Davies-Boudlin Index: 0.209702
-Time to run: 76.764 milliseconds.
+Davies-Boudlin Index: 0.195698
+Time to run: 81.9 milliseconds.
 
 Parrallel DB Index on 10d with 3 clusters and 4 threads: 
-Davies-Boudlin Index: 2.21846
-Time to run: 109.265 milliseconds.
+Davies-Boudlin Index: 2.06214
+Time to run: 116.564 milliseconds.
 
 Parallel DB Index on 10d with 2 clusters and 8 threads: 
-Davies-Boudlin Index: 0.164094
-Time to run: 77.242 milliseconds.
+Davies-Boudlin Index: 0.167341
+Time to run: 82.05 milliseconds.
 
 Parallel DB Index on 10d with 3 clusters and 8 threads: 
-Davies-Boudlin Index: 1.32199
-Time to run: 115.168 milliseconds.
+Davies-Boudlin Index: 1.55347
+Time to run: 118.131 milliseconds.
 ############ Dunn on High Cluster 10d Data ##################
 
 Sequential Dunn Index on 10d with 8 clusters: 
 Dunn Index: 0.0211295
-Time to run: 8.089 milliseconds.
+Time to run: 71.323 milliseconds.
 
 Sequential Dunn Index on 10d with 10 clusters: 
 Dunn Index: 0.025304
-Time to run: 8.088 milliseconds.
+Time to run: 71.172 milliseconds.
 
 Sequential Dunn Index on 10d with 12 clusters: 
 Dunn Index: 0.0269425
-Time to run: 8.529 milliseconds.
+Time to run: 69.218 milliseconds.
 
 Parallel Dunn Index on 10d with 8 clusters and 2 threads: 
-Dunn Index: 0.01834
-Time to run: 80.644 milliseconds.
+Dunn Index: 0.020348
+Time to run: 42.662 milliseconds.
 
 Parallel Dunn Index on 10d with 10 clusters and 2 threads: 
-Dunn Index: 0.0229404
-Time to run: 80.596 milliseconds.
+Dunn Index: 0.0245182
+Time to run: 42.588 milliseconds.
 
 Parallel Dunn Index on 10d with 12 clusters and 2 threads: 
-Dunn Index: 0.027083
-Time to run: 80.94 milliseconds.
+Dunn Index: 0.0263355
+Time to run: 41.326 milliseconds.
 
 Parrallel Dunn Index on 10d with 8 clusters and 4 threads: 
-Dunn Index: 0.03536
-Time to run: 106.674 milliseconds.
+Dunn Index: 0.0272311
+Time to run: 29.255 milliseconds.
 
 Parrallel Dunn Index on 10d with 10 clusters and 4 threads: 
-Dunn Index: 0.00910353
-Time to run: 102.526 milliseconds.
+Dunn Index: 0.0174725
+Time to run: 28.57 milliseconds.
 
 Parrallel Dunn Index on 10d with 12 clusters and 4 threads: 
-Dunn Index: 0.0200932
-Time to run: 103.362 milliseconds.
+Dunn Index: 0.0191899
+Time to run: 28.119 milliseconds.
 
 Parallel Dunn Index on 10d with 8 clusters and 8 threads: 
-Dunn Index: 0.0134771
-Time to run: 150.366 milliseconds.
+Dunn Index: 0.0142927
+Time to run: 21.657 milliseconds.
 
 Parrallel Dunn Index on 10d with 10 clusters and 8 threads: 
-Dunn Index: 0.00411927
-Time to run: 145.294 milliseconds.
+Dunn Index: 0.00887361
+Time to run: 20.896 milliseconds.
 
 Parrallel Dunn Index on 10d with 12 clusters and 8 threads: 
-Dunn Index: 0.0172956
-Time to run: 153.724 milliseconds.
+Dunn Index: 0.0176938
+Time to run: 20.702 milliseconds.
 ############### DB Index on 10d Datas ##############
 
 Sequential DB Index on 10d with 8 clusters: 
 Davies-Boudlin Index: 0.674032
-Time to run: 53.649 milliseconds.
+Time to run: 514.449 milliseconds.
 
 Sequential DB Index on 10d with 10 clusters: 
 Davies-Boudlin Index: 1.49992
-Time to run: 70.183 milliseconds.
+Time to run: 654.33 milliseconds.
 
 Sequential DB Index on 10d with 12 clusters: 
 Davies-Boudlin Index: 1.32691
-Time to run: 91.879 milliseconds.
+Time to run: 804.911 milliseconds.
 
 Parallel DB Index on 10d with 8 clusters and 2 threads: 
-Davies-Boudlin Index: 0.760962
-Time to run: 400.03 milliseconds.
+Davies-Boudlin Index: 0.678672
+Time to run: 441.572 milliseconds.
 
 Parrallel DB Index on 10d with 10 clusters and 2 threads: 
-Davies-Boudlin Index: 1.58211
-Time to run: 514.092 milliseconds.
+Davies-Boudlin Index: 1.49675
+Time to run: 551.474 milliseconds.
 
 Parrallel DB Index on 10d with 12 clusters and 2 threads: 
-Davies-Boudlin Index: 1.30902
-Time to run: 572.864 milliseconds.
+Davies-Boudlin Index: 1.24112
+Time to run: 625.209 milliseconds.
 
 Parallel DB Index on 10d with 8 clusters and 4 threads: 
-Davies-Boudlin Index: 0.564795
-Time to run: 253.849 milliseconds.
+Davies-Boudlin Index: 0.528747
+Time to run: 278.497 milliseconds.
 
 Parrallel DB Index on 10d with 10 clusters and 4 threads: 
-Davies-Boudlin Index: 1.95386
-Time to run: 379.132 milliseconds.
+Davies-Boudlin Index: 1.5509
+Time to run: 404.952 milliseconds.
 
 Parrallel DB Index on 10d with 12 clusters and 4 threads: 
-Davies-Boudlin Index: 1.41679
-Time to run: 413.141 milliseconds.
+Davies-Boudlin Index: 1.49837
+Time to run: 434.605 milliseconds.
 
 Parallel DB Index on 10d with 8 clusters and 8 threads: 
-Davies-Boudlin Index: 0.529202
-Time to run: 182.315 milliseconds.
+Davies-Boudlin Index: 0.989712
+Time to run: 182.172 milliseconds.
 
 Parallel DB Index on 10d with 10 clusters and 8 threads: 
-Davies-Boudlin Index: 1.50968
-Time to run: 262.335 milliseconds.
+Davies-Boudlin Index: 1.70059
+Time to run: 271.675 milliseconds.
 
 Parallel DB Index on 10d with 12 clusters and 8 threads: 
-Davies-Boudlin Index: 1.2761
-Time to run: 293.013 milliseconds.
+Davies-Boudlin Index: 1.39877
+Time to run: 319.425 milliseconds.

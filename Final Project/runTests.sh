@@ -17,11 +17,11 @@ num_points=100000
 echo "############ Dunn on 2d Data ##################" 
 
 echo "Sequential Dunn Index on 2d with 2 clusters: "
-./dunnIndex_seq 100000 2 2 2testClusters_2D_100kpoints.txt
+./dunnIndex_par 100000 2 2 1 2testClusters_2D_100kpoints.txt
 
 
 echo "\nSequential Dunn Index on 2d with 3 clusters: "
-./dunnIndex_seq 100000 3 2 3testClusters_2D_100kpoints.txt
+./dunnIndex_par 100000 3 2 1 3testClusters_2D_100kpoints.txt
 
 echo "\nParallel Dunn Index on 2d with 2 clusters and 2 threads: "
 ./dunnIndex_par 100000 2 2 2 2testClusters_2D_100kpoints.txt
@@ -47,11 +47,11 @@ echo "\nParrallel Dunn Index on 2d with 3 clusters and 8 threads: "
 echo "############ Dunn on 10d Data ##################"
 
 echo "\nSequential Dunn Index on 10d with 2 clusters: "
-./dunnIndex_seq 100000 2 10 2testClusters_10D_100kpoints.txt
+./dunnIndex_par 100000 2 10 1 2testClusters_10D_100kpoints.txt
 
 
 echo "\nSequential Dunn Index on 10d with 3 clusters: "
-./dunnIndex_seq 100000 3 10 3testClusters_10D_100kpoints.txt
+./dunnIndex_par 100000 3 10 1 3testClusters_10D_100kpoints.txt
 
 echo "\nParallel Dunn Index on 10d with 2 clusters and 2 threads: "
 ./dunnIndex_par 100000 2 10 2 2testClusters_10D_100kpoints.txt
@@ -75,10 +75,10 @@ echo "\nParrallel Dunn Index on 10d with 3 clusters and 8 threads: "
 echo "############### DB Index on 2d Data #################"
 
 echo "\nSequential DB Index on 2d with 2 clusters: "
-./DBindex_seq 100000 2 2 2testClusters_2D_100kpoints.txt
+./DBindex_par 100000 2 2 1 2testClusters_2D_100kpoints.txt
 
 echo "\nSequential DB Index on 2d with 3 clusters: "
-./DBindex_seq 100000 3 2 3testClusters_2D_100kpoints.txt
+./DBindex_par 100000 3 2 1 3testClusters_2D_100kpoints.txt
 
 echo "\nParallel DB Index on 2d with 2 clusters and 2 threads: "
 ./DBindex_par 100000 2 2 2 2testClusters_2D_100kpoints.txt
@@ -101,10 +101,10 @@ echo "\nParrallel DB Index on 2d with 3 clusters and 8 threads: "
 echo "############### DB Index on 10d Datas ##############"
 
 echo "\nSequential DB Index on 10d with 2 clusters: "
-./DBindex_seq 100000 2 10 2testClusters_10D_100kpoints.txt
+./DBindex_par 100000 2 10 1 2testClusters_10D_100kpoints.txt
 
 echo "\nSequential DB Index on 10d with 3 clusters: "
-./DBindex_seq 100000 3 10 3testClusters_10D_100kpoints.txt
+./DBindex_par 100000 3 10 1 3testClusters_10D_100kpoints.txt
 
 echo "\nParallel DB Index on 10d with 2 clusters and 2 threads: "
 ./DBindex_par 100000 2 10 2 2testClusters_10D_100kpoints.txt
@@ -127,14 +127,13 @@ echo "\nParallel DB Index on 10d with 3 clusters and 8 threads: "
 echo "############ Dunn on High Cluster 10d Data ##################"
 
 echo "\nSequential Dunn Index on 10d with 8 clusters: "
-./dunnIndex_seq 100000 8 10 8testClusters_10D_100kpoints.txt
-
+./dunnIndex_par 100000 8 10 1 8testClusters_10D_100kpoints.txt
 
 echo "\nSequential Dunn Index on 10d with 10 clusters: "
-./dunnIndex_seq 100000 10 10 10testClusters_10D_100kpoints.txt
+./dunnIndex_par 100000 10 10 1 10testClusters_10D_100kpoints.txt
 
 echo "\nSequential Dunn Index on 10d with 12 clusters: "
-./dunnIndex_seq 100000 12 10 12testClusters_10D_100kpoints.txt
+./dunnIndex_par 100000 12 10 1 12testClusters_10D_100kpoints.txt
 
 echo "\nParallel Dunn Index on 10d with 8 clusters and 2 threads: "
 ./dunnIndex_par 100000 8 10 2 8testClusters_10D_100kpoints.txt
@@ -147,7 +146,6 @@ echo "\nParallel Dunn Index on 10d with 12 clusters and 2 threads: "
 
 echo "\nParrallel Dunn Index on 10d with 8 clusters and 4 threads: "
 ./dunnIndex_par 100000 8 10 4 8testClusters_10D_100kpoints.txt
-
 
 echo "\nParrallel Dunn Index on 10d with 10 clusters and 4 threads: "
 ./dunnIndex_par 100000 10 10 4 10testClusters_10D_100kpoints.txt
@@ -167,13 +165,13 @@ echo "\nParrallel Dunn Index on 10d with 12 clusters and 8 threads: "
 echo "############### DB Index on 10d Datas ##############"
 
 echo "\nSequential DB Index on 10d with 8 clusters: "
-./DBindex_seq 100000 8 10 8testClusters_10D_100kpoints.txt
+./DBindex_par 100000 8 10 1 8testClusters_10D_100kpoints.txt
 
 echo "\nSequential DB Index on 10d with 10 clusters: "
-./DBindex_seq 100000 10 10 10testClusters_10D_100kpoints.txt
+./DBindex_par 100000 10 10 1 10testClusters_10D_100kpoints.txt
 
 echo "\nSequential DB Index on 10d with 12 clusters: "
-./DBindex_seq 100000 12 10 12testClusters_10D_100kpoints.txt
+./DBindex_par 100000 12 10 1 12testClusters_10D_100kpoints.txt
 
 echo "\nParallel DB Index on 10d with 8 clusters and 2 threads: "
 ./DBindex_par 100000 8 10 2 8testClusters_10D_100kpoints.txt
