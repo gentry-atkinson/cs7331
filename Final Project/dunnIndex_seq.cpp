@@ -77,13 +77,10 @@ int main(int argc, char** argv){
 	}
 
 	//calculate max intra-cluster distance
-	for (int i = 0; i < numPoints; i++){
-        for (int j = i; j < numPoints; j++){
-            if (points[i].cluster == points[j].cluster){
-                float thisDis = euDis(points[i], points[j], dimensions);
-                if (thisDis > maxIntraClusterDist)
-                    maxIntraClusterDist = thisDis;
-            }
+	for (int i = 0; i < numPoints-1; ++i){
+        float thisDist = euDis(points[i], centers[points[i].cluster-1], dimensions);
+        if (thisDist > maxIntraClusterDist){
+            maxIntraClusterDist = thisDist;
         }
 	}
 

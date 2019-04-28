@@ -44,25 +44,24 @@ int main(int argc, char** argv){
 	}
 	int i;
 	auto start = high_resolution_clock::now();
-
 	//calculate centers
     float sums[numClusters][dimensions];
     float totalPoints[numClusters];
-    #pragma parallel for private(j)
+    #pragma omp parallel for
 	for(i = 0; i < numClusters; ++i){   //initialize everything to 0
         int j;
         for(j = 0; j < dimensions; ++j)
             sums[i][j] = 0;
         totalPoints[i] = 0;
 	}
-	#pragma parallel for private(j)
+	#pragma omp parallel for
 	for (i = 0; i < numPoints; ++i){    //sum across all dimensions of the point list
         int j;
         for (j = 0; j < dimensions; ++j)
             sums[points[i].cluster-1][j] += points[i].values[j];
         totalPoints[points[i].cluster-1] += 1;
 	}
-    #pragma parallel for private(j)
+    #pragma omp parallel for
 	for (i = 0; i < numClusters; ++i){ //divide sum by points to get centers
         centers[i].values = new float[dimensions];
         int j;
@@ -71,35 +70,25 @@ int main(int argc, char** argv){
         }
         centers[i].cluster = i+1;
 	}
-
 	float minInterClusterDist = bound.max();
 	float maxIntraClusterDist = 0;
 
 	//calculate min inter-cluster distance
-	#pragma parallel for private(j)
-	for (i = 0; i < numClusters; i++){
-        int j;
-        for (j = i; j < numClusters; j++){
-            if (i == j) continue;
+	for (i = 0; i < numClusters-1; ++i){
+        int j = i+1;
+        for (; j < numClusters; ++j){
             float thisDist = euDis(centers[i], centers[j], dimensions);
             if (thisDist < minInterClusterDist)
                 minInterClusterDist = thisDist;
         }
 	}
-
 	//calculate max intra-cluster distance
-	#pragma parallel for private(j)
-	for (i = 0; i < numPoints; i++){
-        int j;
-        for (j = i; j < numPoints; j++){
-            if (points[i].cluster == points[j].cluster){
-                float thisDis = euDis(points[i], points[j], dimensions);
-                if (thisDis > maxIntraClusterDist)
-                    maxIntraClusterDist = thisDis;
-            }
+	for (i = 0; i < numPoints-1; ++i){
+        float thisDist = euDis(points[i], centers[points[i].cluster-1], dimensions);
+        if (thisDist > maxIntraClusterDist){
+            maxIntraClusterDist = thisDist;
         }
 	}
-
 
 	auto stop = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(stop - start);
@@ -112,7 +101,7 @@ int main(int argc, char** argv){
 
 float euDis(point p, point c, int d){
 	float dist = 0;
-	#pragma parallel for
+	#pragma omp parallel for
 	for (int i = 0; i < d; ++i){
         dist += ((p.values[i] - c.values[i]) * (p.values[i] - c.values[i]));
 	}
