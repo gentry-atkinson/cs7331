@@ -109,7 +109,7 @@ float euDis(point p, point c, int d){
 float calcS(const point* points, point center, int numPoints, int d){
     int numClusterPoints = 0;
     float totalDis = 0;
-    #pragma omp parallel for
+    #pragma omp parallel for reduction (+:numClusterPoints)
     for (int i = 0; i < numPoints; i++){
         if (points[i].cluster == center.cluster){
             totalDis += euDis(points[i], center, d);
