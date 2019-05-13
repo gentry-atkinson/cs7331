@@ -1,9 +1,9 @@
 #! /bin/sh
 
-g++ -O0 -w -o dunnIndex_seq dunnIndex_seq.cpp
-g++ -O0 -w -fopenmp -o dunnIndex_par dunnIndex_par.cpp
-g++ -O0 -w -o DBindex_seq DBindex_seq.cpp
-g++ -O0 -w -fopenmp -o DBindex_par DBindex_par.cpp
+#g++ -O0 -w -o dunnIndex_seq dunnIndex_seq.cpp
+g++ -O0 -w -fopenmp -std=c++11 -o dunnIndex_par dunnIndex_par.cpp
+#g++ -O0 -w -o DBindex_seq DBindex_seq.cpp
+g++ -O0 -w -fopenmp -std=c++11 -o DBindex_par DBindex_par.cpp
 
 num_points=100000
 #2CLUSTER_2D_FILE=2testClusters_2D_100kpoints.txt
